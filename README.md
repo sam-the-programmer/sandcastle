@@ -2,9 +2,10 @@
 
 # 🏰 <br> Sandcastle
 
+Sandcastle is a blazingly fast, lightweight build tool for any language or shell.
+
 </section>
 
-Sandcastle is a blazingly fast, lightweight build tool for any language or shell.
 
 ## Usage
 

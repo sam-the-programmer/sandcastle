@@ -10,12 +10,15 @@ import (
 )
 
 const (
-	LIGHTBLUE = "\033[1;34m"
-	LIGHTCYAN = "\033[1;36m"
-	RESET     = "\033[0m"
+	LIGHTBLUE   = "\033[1;34m"
+	LIGHTCYAN   = "\033[1;36m"
+	LIGHTPURPLE = "\033[1;35m"
+	RESET       = "\033[0m"
 )
 
 func main() {
+	fmt.Println(LIGHTPURPLE, "\bCastle v0.0.1\n", RESET)
+
 	config := parse.Parse(os.Args[1])
 
 	fmt.Println(LIGHTBLUE, "\bBuilding... 🔨", RESET)
