@@ -1,7 +1,7 @@
 package parse
 
 import (
-	"log"
+	"fmt"
 	"os"
 
 	"gopkg.in/yaml.v3"
@@ -13,16 +13,21 @@ type T struct {
 }
 
 func Parse(filename string) T {
+	fmt.Println("File → ", filename)
+	fmt.Println()
+
 	t := T{}
 
 	// Read the file
 	f, err := os.ReadFile(filename)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	if err := yaml.Unmarshal(f, &t); err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	return t

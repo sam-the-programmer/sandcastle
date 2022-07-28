@@ -2,6 +2,7 @@ package main
 
 import (
 	"castle/parse"
+	"flag"
 	"fmt"
 	"os"
 	"os/exec"
@@ -14,12 +15,46 @@ const (
 	LIGHTCYAN   = "\033[1;36m"
 	LIGHTPURPLE = "\033[1;35m"
 	RESET       = "\033[0m"
+
+	VERSION = "v0.0.1"
 )
 
-func main() {
-	fmt.Println(LIGHTPURPLE, "\bCastle v0.0.1\n", RESET)
+var (
+	filename    = flag.String("config", "castle.yaml", "Config YAML file to parse.")
+	showVersion = flag.Bool("version", false, "Show version and exit.")
+	shouldBuild = flag.Bool("build", false, "Build the project.")
+	shouldRun   = flag.Bool("run", false, "Run the project.")
+)
 
-	config := parse.Parse(os.Args[1])
+func init() {
+	flag.StringVar(filename, "c", "castle.yml", "Config YAML file to parse.")
+	flag.BoolVar(showVersion, "v", false, "Show version.")
+	flag.BoolVar(shouldBuild, "b", false, "Build the project.")
+	flag.BoolVar(shouldRun, "r", false, "Run the projecte.")
+}
+
+func main() {
+	flag.Parse()
+
+	if *showVersion {
+		fmt.Println(LIGHTPURPLE, "\bCastle", VERSION, RESET)
+		os.Exit(0)
+	}
+
+	fmt.Println(LIGHTPURPLE, "\bCastle", VERSION, RESET)
+	config := parse.Parse(*filename)
+
+	if *shouldBuild {
+		fmt.Println("Building...")
+		RunSection(config.Build)
+		os.Exit(0)
+	}
+
+	if *shouldRun {
+		fmt.Println("Running...")
+		RunSection(config.Run)
+		os.Exit(0)
+	}
 
 	fmt.Println(LIGHTBLUE, "\bBuilding... 🔨", RESET)
 	RunSection(config.Build)

@@ -1,5 +1,5 @@
 build:
-  - test/tools/file.exe build
+  - ./file.exe build
 
 run:
-  - test/tools/file.exe run
+  - ./file.exe run
