@@ -6,7 +6,7 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": ".\\run.bat",
+            "command": "castle -c ./castle.yaml",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

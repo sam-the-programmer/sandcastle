@@ -19,7 +19,7 @@ const (
 	LIGHTYELLOW = "\033[1;33m"
 	RESET       = "\033[0m"
 
-	VERSION = "v0.1.0"
+	VERSION = "v0.1.1"
 )
 
 var (
@@ -68,6 +68,7 @@ func main() {
 			if os.Args[1] == "task" {
 				fmt.Println(LIGHTRED, "\bTask:", os.Args[2], "... 📝", RESET)
 				RunSection(config.Tasks[os.Args[2]])
+				os.Exit(0)
 			}
 		}
 	}
