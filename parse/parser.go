@@ -8,12 +8,14 @@ import (
 )
 
 type T struct {
-	Build []string `yaml:"build"`
-	Run   []string `yaml:"run"`
+	Build []string            `yaml:"build"`
+	Run   []string            `yaml:"run"`
+	Test  []string            `yaml:"test"`
+	Tasks map[string][]string `yaml:"tasks"`
 }
 
 func Parse(filename string) T {
-	fmt.Println("File → ", filename)
+	fmt.Println("Config File → ", filename)
 	fmt.Println()
 
 	t := T{}

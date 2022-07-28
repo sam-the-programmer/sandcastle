@@ -13,7 +13,7 @@ Download the latest release from our [GitHub Release](https://github.com/neuron-
 
 To build and run, simply use...
 
-```bash
+```powershell
 castle
 ```
 
@@ -21,21 +21,36 @@ Where castle.yaml is similar to...
 
 ```yaml
 build:
-  - build_script arg1 arg2
-  - second_build_script arg1
+  - build-script arg1 arg2
+  - second-build-script arg1
 
 run:
-  - run_section arg1
-  - run_more_sections arg1
+  - run-section arg1
+  - run-more-sections arg1
+
+test:
+  - test-script
+  - test-script-2
+  - test-script-3
+
+tasks:
+  format:
+    - format-script
+  admin-stuff:
+    - admin-script
+    - tidy-workspace
 ```
 
 ## CLI Arguments
 
 
-```bash
-Usage of castle.exe:
+```powershell
+Usage of castle:
   -b, -build      Build the project.
   -c, -config     Config YAML file to parse. (default "castle.yml") 
   -r, -run        Run the project.
   -v, -version    Show version.
+  -t, -test       Run the tests.
+
+  task <task-name> Run a task.
 ```

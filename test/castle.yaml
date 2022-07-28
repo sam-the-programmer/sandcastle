@@ -3,3 +3,12 @@ build:
 
 run:
   - ./file.exe run
+
+test:
+  - ./file.exe test
+
+tasks:
+  format:
+    - ./file.exe format
+  admin:
+    - ./file.exe admin
