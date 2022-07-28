@@ -31,7 +31,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(filename, "c", "castle.yml", "Config YAML file to parse.")
+	flag.StringVar(filename, "c", "castle.yaml", "Config YAML file to parse.")
 	flag.BoolVar(showVersion, "v", false, "Show version.")
 	flag.BoolVar(shouldBuild, "b", false, "Build the project.")
 	flag.BoolVar(shouldRun, "r", false, "Run the project.")
@@ -60,12 +60,15 @@ func main() {
 		for i, v := range os.Args {
 			if v == "-c" || v == "-config" {
 				os.Args = append(os.Args[:i], os.Args[i+2:]...)
+				break
 			}
 		}
 
-		if os.Args[1] == "task" {
-			fmt.Println(LIGHTRED, "\bTask:", os.Args[2], "... 📝", RESET)
-			RunSection(config.Tasks[os.Args[2]])
+		if len(os.Args) > 1 {
+			if os.Args[1] == "task" {
+				fmt.Println(LIGHTRED, "\bTask:", os.Args[2], "... 📝", RESET)
+				RunSection(config.Tasks[os.Args[2]])
+			}
 		}
 	}
 
