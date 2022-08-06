@@ -102,21 +102,9 @@ func main() {
 type SavedOutput struct {
 	savedOutput []byte
 }
-type SavedError struct {
-	savedError []byte
-}
 
 func (s *SavedOutput) Write(p []byte) (n int, err error) {
 	return os.Stdout.Write(p)
-}
-
-func (s *SavedError) Write(p []byte) (n int, err error) {
-	var new_p []byte
-	new_p = append(new_p, []byte(RED)...)
-	new_p = append(new_p, p...)
-	new_p = append(new_p, []byte(RESET)...)
-
-	return os.Stderr.Write(new_p)
 }
 
 func RunSection(iter []string) {
@@ -124,16 +112,14 @@ func RunSection(iter []string) {
 		fmt.Println(LIGHTGREY, "\b→", RESET, cmd)
 
 		var so SavedOutput
-		var se SavedError
-
 		c := strings.Split(cmd, " ")
 		cmd := exec.Command(c[0], c[1:]...)
 		cmd.Stdout = &so
-		cmd.Stderr = &se
+		cmd.Stderr = &so
 
 		err := cmd.Run()
 
-		if err != nil && err.Error() != "invalid write result" {
+		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
