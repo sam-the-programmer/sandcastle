@@ -17,9 +17,10 @@ const (
 	LIGHTPURPLE = "\033[1;35m"
 	LIGHTRED    = "\033[1;31m"
 	LIGHTYELLOW = "\033[1;33m"
+	RED         = "\033[31m"
 	RESET       = "\033[0m"
 
-	VERSION = "v0.1.1"
+	VERSION = "v0.1.2"
 )
 
 var (
@@ -48,7 +49,7 @@ func none() bool {
 func main() {
 	flag.Parse()
 
-	fmt.Println(LIGHTPURPLE, "\bCastle", VERSION, RESET)
+	fmt.Println(LIGHTPURPLE, "\bSandCastle", VERSION, RESET)
 
 	if *showVersion {
 		os.Exit(0)
@@ -98,20 +99,43 @@ func main() {
 	os.Exit(0)
 }
 
+type SavedOutput struct {
+	savedOutput []byte
+}
+type SavedError struct {
+	savedError []byte
+}
+
+func (s *SavedOutput) Write(p []byte) (n int, err error) {
+	return os.Stdout.Write(p)
+}
+
+func (s *SavedError) Write(p []byte) (n int, err error) {
+	var new_p []byte
+	new_p = append(new_p, []byte(RED)...)
+	new_p = append(new_p, p...)
+	new_p = append(new_p, []byte(RESET)...)
+
+	return os.Stderr.Write(new_p)
+}
+
 func RunSection(iter []string) {
 	for _, cmd := range iter {
 		fmt.Println(LIGHTGREY, "\b→", RESET, cmd)
 
+		var so SavedOutput
+		var se SavedError
+
 		c := strings.Split(cmd, " ")
 		cmd := exec.Command(c[0], c[1:]...)
+		cmd.Stdout = &so
+		cmd.Stderr = &se
 
-		out, err := cmd.CombinedOutput()
-		fmt.Println(string(out))
+		err := cmd.Run()
 
-		if err != nil {
+		if err != nil && err.Error() != "invalid write result" {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-
 	}
 }

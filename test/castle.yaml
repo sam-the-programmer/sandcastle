@@ -12,3 +12,7 @@ tasks:
     - ./file.exe format
   admin:
     - ./file.exe admin
+  wait:
+    - ./wait.exe
+  error:
+    - ./file.exe err

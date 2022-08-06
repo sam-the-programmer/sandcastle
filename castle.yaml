@@ -2,7 +2,7 @@ build:
   - go build -o=./bin/castle.exe main.go
 
 run:
-  - .\bin\castle.exe -c test/castle.yaml task admin
+  - .\bin\castle.exe -c test/castle.yaml task wait
 
 test:
   - .\bin\castle.exe -c test/castle.yaml task admin

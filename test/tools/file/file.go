@@ -6,11 +6,14 @@ import (
 )
 
 func main() {
-	if os.Args[1] == "build" {
+	switch os.Args[1] {
+	case "build":
 		fmt.Println("Built 🧱")
-	} else if os.Args[1] == "run" {
+	case "run":
 		fmt.Println("Running, running, running, running... 🏃💨")
-	} else {
+	case "err":
+		os.Stderr.Write([]byte("Oh no!"))
+	default:
 		fmt.Println(os.Args[1])
 	}
 }
