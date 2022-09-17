@@ -40,7 +40,6 @@ func UnknownCmd(v any) {
 	fmt.Println(constants.LIGHTRED, "Unknown command:", v, constants.RESET)
 }
 
-// Running commands and tasks
 func RunTask(config parse.T, taskName string) {
 	Task(taskName)
 
@@ -55,7 +54,6 @@ func RunTask(config parse.T, taskName string) {
 	} else {
 		RunSection(config.Tasks[taskName], config)
 	}
-	os.Exit(0)
 }
 
 func RunSection(iter []string, config parse.T) {

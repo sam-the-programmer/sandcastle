@@ -12,6 +12,7 @@ run:
   - SET! HELLO World
   - GET! HELLO
   - TASK! format
+  - TASK! admin
 
 test:
   - ./file.exe test
