@@ -2,11 +2,22 @@ build:
   - go build -o=./bin/castle.exe main.go
 
 run:
-  - .\bin\castle.exe -c test/castle.yaml task wait
+  - .\bin\castle.exe -c test/castle.yaml
+
+deploy:
+    - SET! GOOS windows
+    - go build -o=./bin/castle.exe main.go
+    - ECHO! Built for Windows
+
+    - SET! GOOS linux
+    - go build -o=./bin/castle main.go
+    - ECHO! Built for Linux
+
+    - SET! GOOS darwin
+    - go build -o=./bin/castle-macos main.go
+    - ECHO! Built for MacOS
+
 tasks:
-  build-release:
-    - .\build.bat
-  
   build-tests:
     - go build -o=./wait.exe ./test/tools/wait/wait.go
     - go build -o=./file.exe ./test/tools/file/file.go

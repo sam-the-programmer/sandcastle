@@ -9,6 +9,8 @@ run:
   - SETDIR! ..
   - GETDIR!
   - ECHO! Hello World!
+  - SET! HELLO World
+  - GET! HELLO
 
 test:
   - ./file.exe test
