@@ -3,14 +3,10 @@ build:
 
 run:
   - .\bin\castle.exe -c test/castle.yaml task wait
-
-test:
-  - .\bin\castle.exe -c test/castle.yaml task admin
-  - .\bin\castle.exe -c test/castle.yaml
-  - .\bin\castle.exe -c test/castle.yaml -r
-  - .\bin\castle.exe -c test/castle.yaml -r -t
-  - .\bin\castle.exe -c test/castle.yaml -r -t -b
-
 tasks:
   build-release:
     - .\build.bat
+  
+  build-tests:
+    - go build -o=./wait.exe ./test/tools/wait/wait.go
+    - go build -o=./file.exe ./test/tools/file/file.go

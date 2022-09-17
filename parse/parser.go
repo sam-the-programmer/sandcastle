@@ -7,11 +7,42 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+type ConfigObj struct {
+	BatchSize     int      `yaml:"batch-size"`
+	ParallelTasks []string `yaml:"parallel-tasks"`
+	ParallelCmds  []string `yaml:"parallel-cmds"`
+}
+
+func (c *ConfigObj) IsParallelTask(name string) bool {
+	o := false
+	for _, v := range c.ParallelTasks {
+		if v == name {
+			o = true
+			break
+		}
+	}
+	return o
+}
+
+func (c *ConfigObj) IsParallelCmd(name string) bool {
+	o := false
+	for _, v := range c.ParallelCmds {
+		if v == name {
+			o = true
+			break
+		}
+	}
+	return o
+}
+
 type T struct {
-	Build []string            `yaml:"build"`
-	Run   []string            `yaml:"run"`
-	Test  []string            `yaml:"test"`
-	Tasks map[string][]string `yaml:"tasks"`
+	Config ConfigObj           `yaml:"config"`
+	Tasks  map[string][]string `yaml:"tasks"`
+	Build  []string            `yaml:"build"`
+	Deploy []string            `yaml:"deploy"`
+	Format []string            `yaml:"format"`
+	Run    []string            `yaml:"run"`
+	Test   []string            `yaml:"test"`
 }
 
 func Parse(filename string) T {
