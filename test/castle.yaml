@@ -11,6 +11,7 @@ run:
   - ECHO! Hello World!
   - SET! HELLO World
   - GET! HELLO
+  - TASK! format
 
 test:
   - ./file.exe test
