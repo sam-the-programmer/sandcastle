@@ -76,7 +76,9 @@ The following magic commands can be used for setting directories, and other comm
 
 > **ECHO! string** - Prints the string to the console.
 
-> **SET! value** - Sets the environment variable to the specified value.
+> **SET! key value** - Sets the environment variable to the specified value.
+
+> **GET! key** - Prints the value of an environment variable.
 
 ## CLI Arguments
 
