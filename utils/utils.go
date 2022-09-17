@@ -4,6 +4,7 @@ import (
 	"castle/constants"
 	"castle/parse"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -50,7 +51,7 @@ func RunTask(config parse.T, taskName string) {
 		} else {
 			batchSize = config.Config.BatchSize
 		}
-		RunSectionParallel(config.Tasks[taskName], batchSize)
+		RunSectionParallel(config.Tasks[taskName], batchSize, config)
 	} else {
 		RunSection(config.Tasks[taskName], config)
 	}
@@ -61,7 +62,7 @@ func RunSection(iter []string, config parse.T) {
 	shouldContinue := false
 	for _, cmd := range iter {
 		// Magic commands.
-		dir, shouldContinue = MagicCmds(cmd, dir, config)
+		shouldContinue = MagicCmds(cmd, &dir, config)
 		if shouldContinue {
 			continue
 		}
@@ -70,7 +71,7 @@ func RunSection(iter []string, config parse.T) {
 	}
 }
 
-func RunSectionParallel(iter []string, batchSize int) {
+func RunSectionParallel(iter []string, batchSize int, config parse.T) {
 	if batchSize == -1 {
 		batchSize = len(iter)
 	}
@@ -91,11 +92,19 @@ func RunSectionParallel(iter []string, batchSize int) {
 
 	for _, batch := range batches {
 		var wg sync.WaitGroup
+
 		for _, cmd := range batch {
+
 			wg.Add(1)
+
 			go func(cmd string) {
-				RunCmdInner(cmd, ".")
-				wg.Done()
+				defer wg.Done()
+
+				dir := "."
+				if !MagicCmds(cmd, &dir, config) {
+					RunCmdInner(cmd, ".")
+				}
+
 			}(cmd)
 		}
 
@@ -108,13 +117,14 @@ func RunArgCmd(names []string, cmds [][]string, logFns []func(), config parse.T)
 	for i, v := range names {
 		logFns[i]()
 		if config.Config.IsParallelCmd(v) {
+			log.Println("Running in parallel")
 			var batchSize int
 			if config.Config.BatchSize == 0 {
 				batchSize = -1
 			} else {
 				batchSize = config.Config.BatchSize
 			}
-			RunSectionParallel(cmds[i], batchSize)
+			RunSectionParallel(cmds[i], batchSize, config)
 		} else {
 			RunSection(cmds[i], config)
 		}

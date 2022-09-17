@@ -8,11 +8,12 @@ import (
 	"strings"
 )
 
-func MagicCmds(cmd string, dir string, config parse.T) (string, bool) {
+func MagicCmds(cmd string, dir *string, config parse.T) bool {
 	if strings.HasPrefix(cmd, "SETDIR! ") {
-		dir = cmd[8:]
+		*dir = cmd[8:]
+	} else if strings.HasPrefix(cmd, "RESETDIR! ") {
+		*dir = "."
 	} else if strings.HasPrefix(cmd, "GETDIR!") {
-		dir = "."
 		cwd, _ := os.Getwd()
 		fmt.Println(constants.LIGHTGREY, "\bCurrent directory:", cwd, constants.RESET)
 	} else if strings.HasPrefix(cmd, "ECHO! ") {
@@ -44,7 +45,7 @@ func MagicCmds(cmd string, dir string, config parse.T) (string, bool) {
 	} else if strings.HasPrefix(cmd, "EXIT!") {
 		os.Exit(0)
 	} else {
-		return dir, false
+		return false
 	}
-	return dir, true
+	return true
 }

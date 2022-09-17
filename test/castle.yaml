@@ -1,18 +1,13 @@
 config:
-  parallel-tasks:
-    - wait
+  parallel:
+    - run
 
 build:
   - ./file.exe build
 
 run:
-  - SETDIR! ..
-  - GETDIR!
-  - ECHO! Hello World!
-  - SET! HELLO World
-  - GET! HELLO
-  - TASK! format
-  - TASK! admin
+  - TASK! wait
+  - TASK! wait
 
 test:
   - ./file.exe test
@@ -24,14 +19,8 @@ tasks:
     - ./file.exe admin
   wait:
     - ./wait.exe
-    - ./wait.exe
-    - ./wait.exe
-    - ./wait.exe
-    - ./wait.exe
-    - ./wait.exe
-    - ./wait.exe
-    - ./wait.exe
-    - ./wait.exe
-    - ./wait.exe
   error:
     - ./file.exe err
+  tasks:
+    - TASK! wait
+    - TASK! wait
