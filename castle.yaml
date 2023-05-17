@@ -2,7 +2,7 @@ build:
   - go build -o=./bin/castle.exe main.go
 
 run:
-  - .\bin\castle.exe -c test/castle.yaml run
+  - .\bin\castle.exe -c test/castle.yaml all
 
 deploy:
     - SET! GOOS windows

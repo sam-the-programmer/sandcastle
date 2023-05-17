@@ -1,6 +1,7 @@
 config:
   parallel:
     - run
+  log-level: none
 
 build:
   - ./file.exe build

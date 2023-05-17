@@ -9,8 +9,9 @@ import (
 
 type ConfigObj struct {
 	BatchSize     int      `yaml:"batch-size"`
-	ParallelTasks []string `yaml:"parallel-tasks"`
 	ParallelCmds  []string `yaml:"parallel"`
+	ParallelTasks []string `yaml:"parallel-tasks"`
+	LogLevel      string   `yaml:"log-level"`
 }
 
 func (c *ConfigObj) IsParallelTask(name string) bool {

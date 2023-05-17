@@ -4,7 +4,6 @@ import (
 	"castle/constants"
 	"castle/parse"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -24,7 +23,7 @@ func Version() {
 }
 
 func Building()   { fmt.Println(constants.LIGHTBLUE, "\bBuilding... 🔨", constants.RESET) }
-func Running()    { fmt.Println(constants.LIGHTCYAN, "\bRunning... 🏎️", constants.RESET) }
+func Running()    { fmt.Println(constants.LIGHTCYAN, "\bRunning... ⏲️", constants.RESET) }
 func Formatting() { fmt.Println(constants.LIGHTGREEN, "\bFormatting... 🎨", constants.RESET) }
 func Testing()    { fmt.Println(constants.LIGHTYELLOW, "\bTesting... 🧪", constants.RESET) }
 func Deploying()  { fmt.Println(constants.LIGHTRED, "\bDeploying... 🚀", constants.RESET) }
@@ -42,7 +41,9 @@ func UnknownCmd(v any) {
 }
 
 func RunTask(config parse.T, taskName string) {
-	Task(taskName)
+	if config.Config.LogLevel != "none" {
+		Task(taskName)
+	}
 
 	if config.Config.IsParallelTask(taskName) {
 		var batchSize int
@@ -67,7 +68,7 @@ func RunSection(iter []string, config parse.T) {
 			continue
 		}
 
-		RunCmdInner(cmd, dir)
+		RunCmdInner(cmd, dir, config)
 	}
 }
 
@@ -102,7 +103,7 @@ func RunSectionParallel(iter []string, batchSize int, config parse.T) {
 
 				dir := "."
 				if !MagicCmds(cmd, &dir, config) {
-					RunCmdInner(cmd, ".")
+					RunCmdInner(cmd, ".", config)
 				}
 
 			}(cmd)
@@ -115,9 +116,11 @@ func RunSectionParallel(iter []string, batchSize int, config parse.T) {
 // Runs an argument command, e.g. "castle build"
 func RunArgCmd(names []string, cmds [][]string, logFns []func(), config parse.T) {
 	for i, v := range names {
-		logFns[i]()
+		switch config.Config.LogLevel {
+		default:
+			logFns[i]()
+		}
 		if config.Config.IsParallelCmd(v) {
-			log.Println("Running in parallel")
 			var batchSize int
 			if config.Config.BatchSize == 0 {
 				batchSize = -1
@@ -131,13 +134,20 @@ func RunArgCmd(names []string, cmds [][]string, logFns []func(), config parse.T)
 	}
 }
 
-func RunCmdInner(cmd string, directory string) {
-	RunningCmd(cmd)
-
+func RunCmdInner(cmd string, directory string, config parse.T) {
 	c := strings.Split(cmd, " ")
 	shCmd := exec.Command(c[0], c[1:]...)
-	shCmd.Stdout = os.Stdout
-	shCmd.Stderr = os.Stdout
+
+	switch config.Config.LogLevel {
+	case "none":
+	case "cmd":
+		RunningCmd(cmd)
+	default:
+		RunningCmd(cmd)
+		shCmd.Stdout = os.Stdout
+		shCmd.Stderr = os.Stdout
+	}
+
 	shCmd.Dir = directory
 
 	err := shCmd.Run()
