@@ -1,10 +1,10 @@
-<center>
+<section align="center">
 
 # 🏰 <br> SandCastle
 
 **SandCastle** is a blazingly fast, lightweight build tool for any language, OS or shell.
 
-</center>
+</section>
 
 - [🏰  SandCastle](#--sandcastle)
 - [Installation](#installation)
