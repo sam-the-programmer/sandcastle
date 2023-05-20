@@ -1,8 +1,5 @@
-build:
-  - go build -o=./bin/castle.exe main.go
-
 run:
-  - .\bin\castle.exe -c test/castle.yaml all
+  - go run main.go -f=test/test1.yaml run
 
 deploy:
     - SET! GOOS windows
@@ -16,8 +13,3 @@ deploy:
     - SET! GOOS darwin
     - go build -o=./bin/castle-macos main.go
     - ECHO! Built for MacOS
-
-tasks:
-  build-tests:
-    - go build -o=./wait.exe ./test/tools/wait/wait.go
-    - go build -o=./file.exe ./test/tools/file/file.go

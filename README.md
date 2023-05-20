@@ -1,99 +1,86 @@
-<section align="center">
+<center>
 
-# 🏰 <br> Sandcastle
+# 🏰 <br> SandCastle
 
-Sandcastle is a blazingly fast, lightweight build tool for any language or shell. With a simple call to the `castle` command, you can build and run your project in seconds.
+**SandCastle** is a blazingly fast, lightweight build tool for any language, OS or shell.
 
-</section>
+</center>
 
-## Installation
-Download the latest release from our [GitHub Release](https://github.com/neuron-ai/sandcastle/releases/latest), and add it to your PATH environment variable. You may have to rename the file to **castle**, if you are on *MacOS*, as the file is called **castle-macos**
+- [🏰  SandCastle](#--sandcastle)
+- [Installation](#installation)
+  - [Binaries](#binaries)
+    - [Windows](#windows)
+    - [Linux](#linux)
+    - [MacOS](#macos)
+  - [From Source](#from-source)
+- [Usage](#usage)
+  - [Arguments](#arguments)
+  - [_castle.yaml_](#castleyaml)
+  - [Recognised Shells](#recognised-shells)
 
----
+# Installation
 
-## Usage
+## Binaries
 
-To build and run, simply use...
+### Windows
 
-```powershell
-castle
-```
+- Download the `castle.exe` binary from [releases page](https://github.com/sam-the-programmer/sandcastle/releases/latest).
+- Add it to your `$PATH` and you're good to go!
 
-<small>(Other CLI args are available - read on!)</small>
+### Linux
 
-**castle.yaml**
+- Download the `castle` binary from [releases page](https://github.com/sam-the-programmer/sandcastle/releases/latest).
+- Add it to your `$PATH` and you're good to go!
 
-```yaml
-build: # castle build
-  - build-script arg1 arg2
-  - second-build-script arg1
+### MacOS
 
-run: # castle run
-  - run-section arg1
-  - run-more-sections arg1
+- Download the `castle-macos` binary from [releases page](https://github.com/sam-the-programmer/sandcastle/releases/latest).
+- Rename it to `castle`
+- Add it to your `$PATH` and you're good to go!
 
-test: # castle test
-  - test-script
+## From Source
 
-tasks: # castle task <task-name>
-  - task-name:
-    - task-script
-```
+# Usage
 
 ## Arguments
 
-The following arguments can be passed to the CLI, and they can be used as root level keys in the castle.yaml file.
+- `init` initialise a **SandCastle** project.
+- `<task-name>` run the specified task.
+
+## _castle.yaml_
+
+This is a configuration file that contains all of the tasks and things that you want **SandCastle** to do.
+
+Create a _castle.yaml_ file, using `castle init` or any other method of your choice.
+
+The contents are as follows.
 
 ```yaml
-build
-run
-test
-format
-deploy
-tasks
+config: # the configuration options
+  log_shell_cmds: true # should it give a title for shell steps in a task?
+
+  # log_level is for the internal logging of SandCastle
+  log_level: debug # choose one of "info", "debug", "warn", "error" or "none" - these are
+
+tasks: # the tasks, use the name of the task as a CLI argument
+  run: # the name of the task
+    - echo "Hello, World!" # the steps of the task
+    - echo "Second Step!"
+  deploy: # another task
+    - echo "Deployed!" # you can use shell commands, or any other terminal command
 ```
 
-## Running Commands in Parallel
+Now, if we wanted to run the `deploy` task, we would run `castle deploy`. Just like that!
 
-```yaml
-config:
-  batch-size: 2 # the number of steps to run in parallel
-  parallel: # which default commands you want to enable parallelism for
-    - build
-    - test
-  parallel-tasks: # which tasks you want to enable parallelism for
-    - task-name
-    - task-name-2
-```
+## Recognised Shells
 
-## Magic Commands
+In order to run shell commands, you need to have a shell installed. **SandCastle** supports the following shells:
 
-The following magic commands can be used for setting directories, and other command line builtins. They always end with `!`.
-
-> **SETDIR! directory** - Sets the current directory to the specified directory. This is useful for setting the current directory to the project root, or any other directory.
-
-> **GETDIR!** - Gets the current directory.
-
-> **ECHO! string** - Prints the string to the console.
-
-> **SET! value** - Sets the environment variable to the specified value.
-
-> **GET! key** - Gets the environment variable.
-
-> **TASK! task-name** - Runs the specified task.
-
-## CLI Arguments
-
-
-```powershell
-Usage of castle:
-  -c, -config     Config YAML file to parse. (default "castle.yaml") 
-  -v, -version    Show version.
-
-  run              Run the project.
-  build            Build the project.
-  test             Test the project.
-  deploy           Deploy the project.
-  format           Format the project.
-  task <taskName> Run a task.
-```
+- bash
+- zsh
+- sh
+- csh
+- ksh
+- tcsh
+- dash
+- fish
