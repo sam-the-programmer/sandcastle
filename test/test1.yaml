@@ -1,0 +1,10 @@
+config:
+  workers: 1
+  log_level: debug
+
+tasks:
+  run:
+    - echo "Hello, World!"
+    - echo "Second Step!"
+  deploy:
+    - echo "Deployed!"
