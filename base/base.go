@@ -24,7 +24,7 @@ const (
 	RESET       = "\033[0m"
 	YELLOW      = "\033[33m"
 
-	VERSION = "v0.2.0"
+	VERSION = "v1.0.0"
 )
 
 var (
