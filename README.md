@@ -2,7 +2,7 @@
 
 # 🏰 <br> SandCastle
 
-**SandCastle** is a blazingly fast, lightweight build tool for any language, OS or shell.
+**SandCastle** is a high performance, lightweight build tool for any language, OS or shell.
 
 </section>
 
