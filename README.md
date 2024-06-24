@@ -7,44 +7,22 @@
 </section>
 
 - [🏰  SandCastle](#--sandcastle)
+- [Usage](#usage)
+  - [Arguments](#arguments)
+  - [_castle.yaml_](#castleyaml)
 - [Installation](#installation)
   - [Binaries](#binaries)
     - [Windows](#windows)
     - [Linux](#linux)
     - [MacOS](#macos)
   - [From Source](#from-source)
-- [Usage](#usage)
-  - [Arguments](#arguments)
-  - [_castle.yaml_](#castleyaml)
-  - [Recognised Shells](#recognised-shells)
-
-# Installation
-
-## Binaries
-
-### Windows
-
-- Download the `castle.exe` binary from [releases page](https://github.com/sam-the-programmer/sandcastle/releases/latest).
-- Add it to your `$PATH` and you're good to go!
-
-### Linux
-
-- Download the `castle` binary from [releases page](https://github.com/sam-the-programmer/sandcastle/releases/latest).
-- Add it to your `$PATH` and you're good to go!
-
-### MacOS
-
-- Download the `castle-macos` binary from [releases page](https://github.com/sam-the-programmer/sandcastle/releases/latest).
-- Rename it to `castle`
-- Add it to your `$PATH` and you're good to go!
-
-## From Source
+- [Recognised Shells](#recognised-shells)
 
 # Usage
 
 ## Arguments
 
-- `init` initialise a **SandCastle** project.
+<!-- - `init` initialise a **SandCastle** project. -->
 - `<task-name>` run the specified task.
 
 ## _castle.yaml_
@@ -72,7 +50,30 @@ tasks: # the tasks, use the name of the task as a CLI argument
 
 Now, if we wanted to run the `deploy` task, we would run `castle deploy`. Just like that!
 
-## Recognised Shells
+# Installation
+
+## Binaries
+
+### Windows
+
+- Download the `castle.exe` binary from [releases page](https://github.com/sam-the-programmer/sandcastle/releases/latest).
+- Add it to your `$PATH` and you're good to go!
+
+### Linux
+
+- Download the `castle` binary from [releases page](https://github.com/sam-the-programmer/sandcastle/releases/latest).
+- Add it to your `$PATH` and you're good to go!
+
+### MacOS
+
+- Download the `castle-macos` binary from [releases page](https://github.com/sam-the-programmer/sandcastle/releases/latest).
+- Rename it to `castle`
+- Add it to your `$PATH` and you're good to go!
+
+## From Source
+Clone the repo and run **"go build"**. To run with a demo file, run **"castle run"** using SandCastle itself.
+
+# Recognised Shells
 
 In order to run shell commands, you need to have a shell installed. **SandCastle** supports the following shells:
 
